@@ -12,6 +12,7 @@ namespace NbgCrmCore.Model
         public string Name{ get; set; }
         public decimal Price{ get; set; }
         public int  InventoryQuantity{ get; set; }
+
         public virtual List<BasketItem> BasketItems { get; set; }
 
     }
