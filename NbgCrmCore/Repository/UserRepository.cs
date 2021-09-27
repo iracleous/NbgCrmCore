@@ -40,7 +40,9 @@ namespace NbgCrmCore.Repository
 
         public ICollection<User> RetreiveEntities(int pageNumber, int pageSize)
         {
-            return db.Users.ToList();
+            if (pageNumber < 1) pageNumber = 1;
+            if (pageSize < 1) pageSize = 5;
+            return db.Users.Skip((pageNumber-1)* pageSize).Take(pageSize).ToList();
         }
 
         public DbResponse<User> RetreiveEntity(int id)
