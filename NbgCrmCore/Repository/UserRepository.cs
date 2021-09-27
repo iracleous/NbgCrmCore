@@ -19,6 +19,7 @@ namespace NbgCrmCore.Repository
 
         public DbResponse<User> CreateEntity(User t)
         {
+            if (t.UserId != 0) t.UserId = 0;
             db.Users.Add(t);
             db.SaveChanges();
             return new DbResponse<User> { 
@@ -63,7 +64,35 @@ namespace NbgCrmCore.Repository
 
         public DbResponse<User> UpdateEntity(User t, int id)
         {
-            throw new NotImplementedException();
+            User user = db.Users.Find(id);
+            if (user==null)
+            {
+                return new DbResponse<User>
+                {
+                    ReturnCode = 400,
+                     ReturnData =null,
+                     ReturnDescription="No such user"
+
+                };
+            }
+            user.FirstName = t.FirstName;
+            user.LastName = t.LastName;
+            user.Email = t.Email;
+            user.Address = t.Address;
+            user.Password = t.Password;
+            user.Username = t.Username;
+
+            db.SaveChanges();
+
+            return new DbResponse<User>
+            {
+                ReturnCode = 200,
+                ReturnData = user,
+                ReturnDescription = "OK"
+
+            };
+
+
         }
     }
 }

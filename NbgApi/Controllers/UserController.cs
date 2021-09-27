@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using NbgCrmCore.Model;
 using NbgCrmCore.Repository;
+using NbgCrmCore.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,16 +41,24 @@ namespace NbgApi.Controllers
 
         // localhost/user/1
         [HttpGet("{userId}")]
-        public User Get(int userId)
+        public DbResponse<User> Get(int userId)
         {
-            return _userRepository.RetreiveEntity(userId).ReturnData;
+            return _userRepository.RetreiveEntity(userId) ;
         }
 
         // localhost/user
         [HttpPost]
-        public User Create(User user)
+        public DbResponse<User> Create(User user)
         {
-          return  _userRepository.CreateEntity(user).ReturnData;
+          return  _userRepository.CreateEntity(user) ;
         }
+
+        [HttpPut("{userId}")]
+        public DbResponse<User> Update([FromRoute] int userId, [FromBody] User user)
+        {
+            return _userRepository.UpdateEntity(user, userId) ;
+        }
+
+
     }
 }
