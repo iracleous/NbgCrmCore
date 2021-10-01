@@ -64,16 +64,20 @@ namespace NbgMvc.Controllers
         // GET: UserController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            User user = userRepository.RetreiveEntity(id).ReturnData;
+            return View(user);
         }
 
         // POST: UserController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, [FromForm] User user)
         {
             try
             {
+
+
+                userRepository.UpdateEntity(user, id);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -85,7 +89,9 @@ namespace NbgMvc.Controllers
         // GET: UserController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+            User user = userRepository.RetreiveEntity(id).ReturnData;
+            return View(user);
         }
 
         // POST: UserController/Delete/5
@@ -95,11 +101,15 @@ namespace NbgMvc.Controllers
         {
             try
             {
+
+                bool success = userRepository.HardDeleteEntity(id);
+                if (!success) throw new Exception("cannot delete");
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                User user = userRepository.RetreiveEntity(id).ReturnData;
+                return View(user);
             }
         }
     }

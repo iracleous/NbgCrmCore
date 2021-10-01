@@ -36,7 +36,11 @@ namespace NbgCrmCore.Repository
 
         public bool HardDeleteEntity(int id)
         {
-            throw new NotImplementedException();
+            User user = db.Users.Find(id);
+            if (user == null) return false;
+            db.Users.Remove(user);
+            db.SaveChanges();
+            return true;
         }
 
         public ICollection<User> RetreiveEntities(int pageNumber, int pageSize)
