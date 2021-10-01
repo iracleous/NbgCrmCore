@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace NbgApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class UserController : ControllerBase
     {
         
