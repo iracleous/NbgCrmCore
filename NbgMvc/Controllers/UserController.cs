@@ -75,9 +75,7 @@ namespace NbgMvc.Controllers
         {
             try
             {
-
-
-                userRepository.UpdateEntity(user, id);
+              userRepository.UpdateEntity(user, id);
                 return RedirectToAction(nameof(Index));
             }
             catch
