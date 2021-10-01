@@ -47,10 +47,12 @@ namespace NbgMvc.Controllers
         // POST: UserController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([FromForm] User user)
         {
             try
             {
+                userRepository.CreateEntity(user);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
