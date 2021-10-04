@@ -27,6 +27,7 @@ namespace NbgMvc
         {
             services.AddDbContext<CrmDbContext, CrmDbContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddControllersWithViews();
         }
 

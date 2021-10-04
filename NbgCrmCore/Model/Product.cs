@@ -13,6 +13,11 @@ namespace NbgCrmCore.Model
         public decimal Price{ get; set; }
         public int  InventoryQuantity{ get; set; }
 
+        public Color Color { get; set; }
+
+        public DateTime BuyDate  { get; set; }
+
+        public string ImageFilename { get; set; }
         public virtual List<BasketItem> BasketItems { get; set; }
 
     }
