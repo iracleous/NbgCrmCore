@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NbgCrmCore.Model;
 using NbgCrmCore.Repository;
+using NbgMvc.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,20 @@ namespace NbgMvc.Controllers
             productRepository = _productRepository;
         }
         // GET: ProductsController
-        public ActionResult Index()
+        public ActionResult Index([FromQuery] int pageSize=1, [FromQuery] int pageCount=1)
         {
-            List<Product> products = productRepository.RetreiveEntities(1,10).ToList();
-            return View("List", products);
+
+            if (pageCount <= 0) pageCount = 1;
+           
+            List<Product> products = productRepository
+                .RetreiveEntities(pageCount, pageSize).ToList();
+            ProductsPage productsPage = new() { Products = products,
+                PageCount = pageCount  ,
+                PageNext= pageCount +1,
+                PagePrevious = pageCount - 1 ,
+            };
+
+            return View("List", productsPage);
         }
 
         // GET: ProductsController/Details/5
@@ -73,10 +84,11 @@ namespace NbgMvc.Controllers
         // POST: ProductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, Product product)
         {
             try
             {
+                productRepository.UpdateEntity(product, id);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -90,6 +102,7 @@ namespace NbgMvc.Controllers
         {
 
             Product product = productRepository.RetreiveEntity(id).ReturnData;
+
             return View(product);
         }
 
@@ -100,6 +113,7 @@ namespace NbgMvc.Controllers
         {
             try
             {
+                productRepository.HardDeleteEntity(id);
                 return RedirectToAction(nameof(Index));
             }
             catch

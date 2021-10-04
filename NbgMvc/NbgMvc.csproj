@@ -19,4 +19,8 @@
     <ProjectReference Include="..\NbgCrmCore\NbgCrmCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Basket\" />
+  </ItemGroup>
+
 </Project>

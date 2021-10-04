@@ -29,6 +29,7 @@ namespace NbgCrmCore.Repository
             if (product == null)
                 return false;
             db.Products.Remove(product);
+            db.SaveChanges();
             return true;
         }
 
@@ -54,7 +55,34 @@ namespace NbgCrmCore.Repository
 
         DbResponse<Product> IRepository<Product>.UpdateEntity(Product t, int id)
         {
-            throw new NotImplementedException();
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return new DbResponse<Product>
+                {
+                    ReturnCode = 400,
+                    ReturnData = null,
+                    ReturnDescription = "No such product"
+
+                };
+            }
+            product.Name = t.Name;
+            product.BuyDate = t.BuyDate;
+            product.Color = t.Color;
+            product.ImageFilename= t.ImageFilename;
+            product.Price = t.Price;
+            product.InventoryQuantity = t.InventoryQuantity;
+
+            db.SaveChanges();
+
+            return new DbResponse<Product>
+            {
+                ReturnCode = 200,
+                ReturnData = product,
+                ReturnDescription = "OK"
+
+            };
+
         }
     }
 }
