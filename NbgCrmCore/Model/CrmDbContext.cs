@@ -15,10 +15,22 @@ namespace NbgCrmCore.Model
         public DbSet<Basket> Baskets { set; get; }
         public DbSet<BasketItem> BasketItems { set; get; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public CrmDbContext()
         {
-           optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=nbgCrm2021;Integrated Security=True");
+
         }
+
+        public CrmDbContext(DbContextOptions<CrmDbContext> options) 
+            :base(options)
+        {
+
+        }
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=nbgCrm2021;Integrated Security=True");
+
+
+        //   }
 
     }
 }

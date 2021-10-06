@@ -27,6 +27,7 @@ namespace NbgMvc.Controllers
         public ActionResult UserList()
         {
             List<User> users = userRepository.RetreiveEntities(1, 10).ToList();
+
             return View(users);
         }
 

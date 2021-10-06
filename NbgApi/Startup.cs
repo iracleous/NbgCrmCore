@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -48,7 +49,11 @@ namespace NbgApi
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NbgApi", Version = "v1" });
             //});
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddDbContext<CrmDbContext, CrmDbContext>();
+         //   services.AddDbContext<CrmDbContext, CrmDbContext>();
+
+            services.AddDbContext<CrmDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("NbgSqlConnection")));
+
 
             services.AddControllers();
         }

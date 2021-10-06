@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,7 +26,12 @@ namespace NbgMvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CrmDbContext, CrmDbContext>();
+            // services.AddDbContext<CrmDbContext, CrmDbContext>();
+
+            services.AddDbContext<CrmDbContext>(options =>
+                           options.UseSqlServer(Configuration.GetConnectionString("NbgSqlConnection")));
+
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddControllersWithViews();
