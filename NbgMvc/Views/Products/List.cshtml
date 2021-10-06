@@ -13,22 +13,23 @@
     <thead>
         <tr>
             <th>
-                Name
+                @Html.DisplayNameFor(model => model.Products[0].Name)
+
             </th>
             <th>
-                Price
+                @Html.DisplayNameFor(model => model.Products[0].Price)
             </th>
             <th>
-                InventoryQuantity
+                @Html.DisplayNameFor(model => model.Products[0].InventoryQuantity)
             </th>
             <th>
-                Color
+                @Html.DisplayNameFor(model => model.Products[0].Color)
             </th>
             <th>
-                BuyDate
+                @Html.DisplayNameFor(model => model.Products[0].BuyDate)
             </th>
             <th>
-                ImageFilename
+                @Html.DisplayNameFor(model => model.Products[0].ImageFilename)
             </th>
             <th></th>
         </tr>
@@ -65,5 +66,14 @@
     </tbody>
 </table>
 
-<a href="/Products?pageCount=@Html.DisplayFor(model => model.PagePrevious)">Previous page</a>
+<!--    text, link   ->  Html.ActionLink( link text ,  actionName ,  controllerName , Route value , htmlArguments  ) -->
+
+@{
+    int a = Model.PageCount;
+    a++;
+}
+
+@a  
+
+<a href="/Products?pageCount=@Html.DisplayFor(model => model.PagePrevious)">Previous page</a>|
 <a href="/Products?pageCount=@Html.DisplayFor(model => model.PageNext)">Next page</a>

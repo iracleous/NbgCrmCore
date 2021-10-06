@@ -18,6 +18,7 @@ namespace NbgApi
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -29,7 +30,19 @@ namespace NbgApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                                  builder =>
+                                  {
+                                      builder.WithOrigins("https://localhost:44370")
+                                      .AllowAnyHeader();
+                                  });
+            });
+
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NbgApi", Version = "v1" });
@@ -37,6 +50,7 @@ namespace NbgApi
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<CrmDbContext, CrmDbContext>();
 
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +62,8 @@ namespace NbgApi
                 //app.UseSwagger();
                 //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NbgApi v1"));
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseHttpsRedirection();
 

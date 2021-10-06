@@ -1,0 +1,118 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+
+@model NbgMvc.Models.ProductsPage
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="responseDiv"></div>
+<input id="firstName" placeholder="firstName"/>
+<input id="lastName"  placeholder="lastName"/>
+<input id="username"  placeholder="username" />
+<input id="email"  placeholder="email" />
+<input id="password"  placeholder="password" />
+<input id="address"  placeholder="address" />
+
+<button onclick="doWorkWithUser()">Press to doWorkWithUser</button>
+<button onclick="doWorkWithProduct()">Press to doWorkWithProduct</button>
+<script>
+
+    function doWorkWithProduct() {
+        let Url = 'https://localhost:44369/api/user';
+        let Method = 'POST';
+        let Data = JSON.stringify({
+            firstName: $('#firstName').val(),
+            lastName: $('#lastName').val(),
+            username: $('#username').val(),
+            email: $('#email').val(),
+            password: $('#password').val(),
+            address: $('#address').val()
+        });
+
+       // alert(JSON.stringify(Data))
+        $.ajax({
+            url: Url,
+            method: Method,
+            contentType: 'application/json',
+            data: Data
+        }).done(response => {
+
+      
+               $('#responseDiv').html('<br>'+JSON.stringify(response));
+            //   console.log(response);
+
+        }).fail(failure => {
+            console.log(failure);
+            $('#responseDiv').html('Error in the communication')
+        }).always(response => {
+            //    console.log(response);
+            //     $('#responseDiv').append('<br>always');
+        });
+
+
+
+
+    }
+
+    function doWorkWithUser() {
+
+        let Url = 'https://localhost:44369/api/user';
+        let Method = 'GET';
+        let Data = JSON.stringify({
+            name: $('#Name').val(),
+            creationDate: $('#CreationDate').val()
+        });
+
+
+
+        $.ajax({
+            url: Url,
+            method: Method,
+            contentType: 'application/json',
+            data: Data
+        }).done(response => {
+
+            // convert string to JSON
+            // JSON.parse()
+
+            //convert JSON to string
+            // JSON.stringify()
+
+
+            //1 parse string array
+            let cc = ''
+            cc = cc + ("<ol type='1'>");
+            $.each(response, function (key, value) {
+                currentValue = value;
+                cc = cc + ('<li>'
+                    + currentValue.firstName
+                    + ' ' + currentValue.lastName
+                    + ' ' + currentValue.username
+                    + '</li>');
+            });
+            cc = cc + ('</ol><br>');
+            $('#responseDiv').append(cc)
+
+
+            $('#responseDiv').append('The registration was  successful');
+            //   $('#responseDiv').append('<br>'+JSON.stringify(response));
+            //   console.log(response);
+
+        }).fail(failure => {
+
+            $('#responseDiv').html('Error in the communication')
+        }).always(response => {
+            //    console.log(response);
+            //     $('#responseDiv').append('<br>always');
+        });
+
+
+    }
+</script>

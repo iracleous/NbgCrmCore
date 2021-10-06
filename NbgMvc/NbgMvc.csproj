@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Basket\" />
+    <Folder Include="Other\" />
+    <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>
