@@ -28,9 +28,10 @@ function doWorkWithUser() {
 
 
         console = "<table  class='table'>"
-        + " <thead><tr><th> firstName </th><th> lastName  </th></tr> </thead> <tbody>";
+            + " <thead><tr><th> firstName </th><th> lastName  </th>   <th> baskets  </th> </tr> </thead> <tbody>";
         $.each(response, function (key, value) {
-            console += '<tr> <td>' + value.firstName + '</td><td>' + value.lastName + '</td></tr>';
+            console += '<tr> <td>' + value.firstName + '</td><td>' + value.lastName + '</td>' +
+                '<td>' + value.baskets + '</td> </tr>';
         });
         console += "</tbody></table>";
 

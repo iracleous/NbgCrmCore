@@ -1,4 +1,5 @@
-﻿using NbgCrmCore.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using NbgCrmCore.Model;
 using NbgCrmCore.Response;
 using System;
 using System.Collections.Generic;
@@ -52,7 +53,7 @@ namespace NbgCrmCore.Repository
 
         public DbResponse<User> RetreiveEntity(int id)
         {
-            User user = db.Users.Find(id);
+            User user = db.Users.Where(p=>p.UserId==id).Include( user =>user.Baskets).First();
             return new DbResponse<User>
             {
                 ReturnCode = 0,

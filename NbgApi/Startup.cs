@@ -13,6 +13,7 @@ using NbgCrmCore.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace NbgApi
@@ -31,7 +32,8 @@ namespace NbgApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
+            services.AddControllers().AddJsonOptions(x =>
+                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 
             services.AddCors(options =>
