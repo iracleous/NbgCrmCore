@@ -9,6 +9,6 @@ namespace NbgCrmCore.Service
 {
     public interface IUserService
     {
-        public UserDto AddUser(UserDto userDto);
+        public Task<UserDto> AddUser(UserDto userDto);
     }
 }

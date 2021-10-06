@@ -18,11 +18,9 @@ namespace NbgCrmCore.Service
             userRepository = _userRepository;
         }
 
-        public UserDto AddUser(UserDto userDto)
+        public Task<UserDto> AddUser(UserDto userDto)
         {
-            User user = userDto.GetUser();
-            userRepository.CreateEntity(user);
-            return new UserDto(user);
+            throw new NotImplementedException();
         }
     }
 }
