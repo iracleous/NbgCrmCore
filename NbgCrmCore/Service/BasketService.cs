@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using NbgCrmCore.Model;
 using System;
 using System.Collections.Generic;
@@ -40,22 +41,49 @@ namespace NbgCrmCore.Service
 
             db.BasketItems.Add(basketItem);
             db.SaveChanges();
+            logger.LogInformation("AddProductToBasket basketItem added");
             return true;
         }
 
         public bool CreateBasket(int userId)
         {
-            return false;
+            logger.LogInformation("CreateBasket");
+            User user = db.Users.Find(userId);
+            if (user == null)
+            {
+                logger.LogInformation("CreateBasket user not found");
+                return false;
+            }
+
+            var basket = new Basket { DateTime=DateTime.Now,  Status= Status.OPEN, User= user};
+
+            db.Baskets.Add(basket);
+            db.SaveChanges();
+
+            logger.LogInformation("CreateBasket basket created");
+            return true;
         }
 
         public List<Basket> GetBasketByUserId(int userId)
         {
-            return new List<Basket>();
+            logger.LogInformation("GetBasketByUserId");
+            return db.Baskets
+                .Where(basket => basket.User.UserId == userId)
+                .Include(basket => basket.User)
+                .Include(basket => basket.BasketItems)
+                .ThenInclude(basketItem => basketItem.Product)
+                .ToList();
         }
 
         public Basket GetBasketWithProducts(int basketId)
         {
-            return new Basket();
+            logger.LogInformation("GetBasketWithProducts");
+            return db.Baskets
+                .Where(basket => basket.BasketId==basketId)
+                .Include(basket => basket.User)
+                .Include(basket => basket.BasketItems)
+                .ThenInclude(basketItem => basketItem.Product)
+                .FirstOrDefault();
         }
     }
 }
