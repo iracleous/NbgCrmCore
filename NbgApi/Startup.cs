@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NbgCrmCore.Model;
 using NbgCrmCore.Repository;
+using NbgCrmCore.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,8 +33,8 @@ namespace NbgApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers().AddJsonOptions(x =>
-                    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+          services.AddControllers().AddJsonOptions(x =>
+                   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 
             services.AddCors(options =>
@@ -51,6 +52,9 @@ namespace NbgApi
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "NbgApi", Version = "v1" });
             //});
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IBasketService, BasketService>();
+
+
          //   services.AddDbContext<CrmDbContext, CrmDbContext>();
 
             services.AddDbContext<CrmDbContext>(options =>
