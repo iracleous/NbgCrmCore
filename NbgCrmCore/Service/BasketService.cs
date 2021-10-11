@@ -87,5 +87,17 @@ namespace NbgCrmCore.Service
                 .ThenInclude(basketItem => basketItem.Product)
                 .FirstOrDefault();
         }
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

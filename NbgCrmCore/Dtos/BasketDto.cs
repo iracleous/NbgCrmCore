@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NbgCrmCore.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,26 @@ namespace NbgCrmCore.Dtos
         public int? UserId { get; set; }
         public string UserName { get; set; }
         public List<ProductDto> Products { get; set; }
+
+        public BasketDto(Basket basket)
+        {
+            BasketId = basket.BasketId;
+            TotalAmount = basket.TotalAmount;
+            StatusDescription = basket.Status.ToString();
+            DateTime = basket.DateTime;
+            UserId = basket.User.UserId;
+            UserName = basket.User.Username;
+            Products = new List<ProductDto>();
+
+            basket.BasketItems.ForEach(item => Products.Add(new ProductDto {
+                ProductId = item.Product.ProductId,
+                Price = item.Product.Price,
+                Name = item.Product.Name,
+                ColorDescription = item.Product.Color.ToString(),
+                ImageFilename = item.Product.ImageFilename
+            }));
+
+        }
 
     }
 }

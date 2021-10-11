@@ -11,11 +11,11 @@ namespace NbgCrmCore.Dtos
         public int ProductId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
-        public int InventoryQuantity { get; set; }
+   //     public int InventoryQuantity { get; set; }
 
         public string ColorDescription { get; set; }
 
-        public DateTime BuyDate { get; set; }
+   //     public DateTime BuyDate { get; set; }
 
         public string ImageFilename { get; set; }
     }

@@ -53,9 +53,9 @@ namespace NbgApi
             //});
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IBasketService, BasketService>();
+            services.AddScoped<IBasketDtoService, BasketDtoService>();
 
-
-         //   services.AddDbContext<CrmDbContext, CrmDbContext>();
+            //   services.AddDbContext<CrmDbContext, CrmDbContext>();
 
             services.AddDbContext<CrmDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("NbgSqlConnection")));
