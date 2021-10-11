@@ -36,30 +36,37 @@ namespace NbgApi.Controllers
 
         // GET: api/<BasketDtoController>
         [HttpGet("{basketId}")]
-        public BasketDto GetBasketDtoWithProducts(int basketId)
+        public IActionResult GetBasketDtoWithProducts(int basketId)
         {
             logger.LogInformation("GetBasketDtoWithProducts");
             BasketDto basketDto = basketService.GetBasketDtoWithProducts(basketId);
-            if (basketDto == null) return new BasketDto();
-            return basketDto;
+            if (basketDto == null) return NotFound();
+            return Ok(basketDto); 
         }
 
-        // POST api/<BasketDtoController>
-        [HttpPost]
-        public void Post([FromBody] string value)
+
+
+
+        // POST api/<BasketController>{userId}
+        [HttpPost("user/{userId}")]
+        public bool CreateBasket([FromRoute] int userId)
         {
+            logger.LogInformation("CreateBasket");
+            return basketService.CreateBasket(userId);
         }
 
-        // PUT api/<BasketDtoController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+
+        // POST api/<BasketController>/{basketId}/product/{productId}
+        [HttpPost("{basketId}/product/{productId}")]
+        public bool AddProductToBasket([FromRoute] int basketId, [FromRoute] int productId)
         {
+            logger.LogInformation("AddProductToBasket");
+            return basketService.AddProductToBasket(basketId, productId);
         }
 
-        // DELETE api/<BasketDtoController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
+
+
+
     }
 }
