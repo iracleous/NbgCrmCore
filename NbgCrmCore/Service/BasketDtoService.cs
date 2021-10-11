@@ -14,10 +14,10 @@ namespace NbgCrmCore.Service
         private readonly CrmDbContext db;
         private readonly ILogger<BasketDtoService> logger;
 
-        private readonly BasketService basketService;
+        private readonly IBasketService basketService;
 
         public BasketDtoService(CrmDbContext _db, ILogger<BasketDtoService> _logger ,
-            BasketService _basketService  )
+            IBasketService _basketService  )
         {
             db = _db;
             logger = _logger;
@@ -45,6 +45,7 @@ namespace NbgCrmCore.Service
         public BasketDto GetBasketDtoWithProducts(int basketId)
         {
             Basket basket = basketService.GetBasketWithProducts(basketId);
+            if (basket == null) return null;
             return new BasketDto(basket);
         }
     }

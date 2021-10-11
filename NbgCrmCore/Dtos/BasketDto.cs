@@ -19,24 +19,31 @@ namespace NbgCrmCore.Dtos
         public string UserName { get; set; }
         public List<ProductDto> Products { get; set; }
 
+        public BasketDto() { }
+
         public BasketDto(Basket basket)
         {
-            BasketId = basket.BasketId;
-            TotalAmount = basket.TotalAmount;
-            StatusDescription = basket.Status.ToString();
-            DateTime = basket.DateTime;
-            UserId = basket.User.UserId;
-            UserName = basket.User.Username;
-            Products = new List<ProductDto>();
 
-            basket.BasketItems.ForEach(item => Products.Add(new ProductDto {
-                ProductId = item.Product.ProductId,
-                Price = item.Product.Price,
-                Name = item.Product.Name,
-                ColorDescription = item.Product.Color.ToString(),
-                ImageFilename = item.Product.ImageFilename
-            }));
+            if (basket != null)
+            {
 
+                BasketId = basket.BasketId;
+                TotalAmount = basket.TotalAmount;
+                StatusDescription = basket.Status.ToString();
+                DateTime = basket.DateTime;
+                UserId = basket.User.UserId;
+                UserName = basket.User.Username;
+                Products = new List<ProductDto>();
+
+                basket.BasketItems.ForEach(item => Products.Add(new ProductDto
+                {
+                    ProductId = item.Product.ProductId,
+                    Price = item.Product.Price,
+                    Name = item.Product.Name,
+                    ColorDescription = item.Product.Color.ToString(),
+                    ImageFilename = item.Product.ImageFilename
+                }));
+            }
         }
 
     }
