@@ -28,10 +28,10 @@ namespace NbgApi.Controllers
 
         // GET: api/<BasketDtoController>
         [HttpGet("user/{userId}")]
-        public IEnumerable<BasketDto> GetBasketDtoByUserId(int userId)
+        public IActionResult GetBasketDtoByUserId(int userId)
         {
             logger.LogInformation("GetBasketDtoByUserId");
-            return basketService.GetBasketDtoByUserId(userId);
+            return Ok(basketService.GetBasketDtoByUserId(userId));
         }
 
         // GET: api/<BasketDtoController>

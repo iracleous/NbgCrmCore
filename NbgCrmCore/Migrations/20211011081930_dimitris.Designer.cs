@@ -10,8 +10,8 @@ using NbgCrmCore.Model;
 namespace NbgCrmCore.Migrations
 {
     [DbContext(typeof(CrmDbContext))]
-    [Migration("20211004051120_dim2")]
-    partial class dim2
+    [Migration("20211011081930_dimitris")]
+    partial class dimitris
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using NbgCrmCore.Model;
 using System;
 using System.Collections.Generic;
@@ -19,11 +20,19 @@ namespace NbgApi.Controllers
         {
             this.db = db;
         }
-        // GET: api/<ProductController>
+        // GET: api/<ProductController>?productName=chips&maxPrice=2
         [HttpGet]
-        public IEnumerable<Product> Get()
+        public async Task< IEnumerable<Product>> Get(
+            [FromQuery] string productName, [FromQuery] decimal? maxPrice)
         {
-            return db.Products.ToList();
+            var result = db.Products.Select(p => p); 
+            if (productName != null)
+                result = result.Where(product => product.Name.Contains(productName));
+
+            if (maxPrice != null)
+                result = result.Where(product => product.Price <= maxPrice);
+
+            return await result.ToListAsync();
         }
 
         // GET api/<ProductController>/5

@@ -25,12 +25,12 @@ namespace NbgCrmCore.Model
         {
 
         }
-        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        // {
-        //     optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=nbgCrm2021;Integrated Security=True");
+          protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+          {
+              optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=nbgCrm2021;Integrated Security=True");
 
-
-        //   }
+            
+           }
 
     }
 }
