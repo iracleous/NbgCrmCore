@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,10 +29,23 @@ namespace NbgCrmCore.Model
         }
           protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
           {
-              optionsBuilder.UseSqlServer("Data Source=localhost;Initial Catalog=nbgCrm2021;Integrated Security=True");
 
-            
-           }
+            IConfigurationBuilder builder = new ConfigurationBuilder() 
+            .SetBasePath(Path.Combine(AppContext.BaseDirectory))
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+
+            IConfiguration _iConfiguration = builder.Build();
+            string _connectionString = _iConfiguration.GetConnectionString("NbgSqlConnection");
+
+
+            optionsBuilder.UseSqlServer(
+                _connectionString, 
+                providerOptions => providerOptions.CommandTimeout(60))
+                          .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+
+        }
 
     }
 }

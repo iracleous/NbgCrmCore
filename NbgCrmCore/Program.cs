@@ -8,7 +8,7 @@ namespace NbgCrmCore
     {
         static void Main(string[] args)
         {
-             
+            Test2();
         }
 
 
