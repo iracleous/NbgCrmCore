@@ -4,6 +4,7 @@ using NbgCrmCore.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,7 +26,7 @@ namespace NbgApi.Controllers
         public async Task< IEnumerable<Product>> Get(
             [FromQuery] string productName, [FromQuery] decimal? maxPrice)
         {
-            var result = db.Products.Select(p => p); 
+        /*    var result = db.Products.Select(p => p); 
             if (productName != null)
                 result = result.Where(product => product.Name.Contains(productName));
 
@@ -33,7 +34,14 @@ namespace NbgApi.Controllers
                 result = result.Where(product => product.Price <= maxPrice);
 
             return await result.ToListAsync();
-        }
+        */
+
+            return await db.Products.AsQueryable()
+                .WhereIf  (productName!=null, product => product.Name.Contains(productName))
+                .WhereIf  (maxPrice != null, product => product.Price <= maxPrice)
+                .ToListAsync();
+           }
+
 
         // GET api/<ProductController>/5
         [HttpGet("{id}")]
@@ -76,4 +84,21 @@ namespace NbgApi.Controllers
             }
         }
     }
+
+
+    public static class LinqExtensions
+    {
+        public static IQueryable<T> WhereIf<T>(this IQueryable<T> query, 
+            bool condition, Expression<Func<T, bool>> whereClause)
+        {
+            if (condition)
+            {
+                return query.Where(whereClause);
+            }
+            return query;
+        }
+    }
+
+
+
 }
