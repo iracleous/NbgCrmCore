@@ -31,6 +31,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Products[0].ImageFilename)
             </th>
+            <th>Product image</th>
             <th></th>
         </tr>
     </thead>
@@ -56,6 +57,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ImageFilename)
                 </td>
+                <td><img src="~/uploads/@item.ImageFilename" width="100px" heiht="50px" /></td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
                     <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |

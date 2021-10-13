@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NbgCrmCore.Model;
 using NbgCrmCore.Repository;
 using System;
@@ -12,15 +13,17 @@ namespace NbgMvc.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository userRepository;
+        private readonly ILogger<UserController> logger;
 
-
-        public UserController(IUserRepository _userRepository) {
+        public UserController(IUserRepository _userRepository, ILogger<UserController> _logger) {
             userRepository = _userRepository;
+            logger = _logger;
         }
 
         // GET: UserController
         public ActionResult Index()
         {
+            logger.LogInformation("Index");
             return View();
         }
 

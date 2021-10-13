@@ -52,10 +52,10 @@ namespace NbgMvc.Controllers
             try
             {
                 Product product = productWithImage.Product;
-                productRepository.CreateEntity(product);
-
-                var img = productWithImage.ProductImage;
-
+              
+ 
+              
+                 var img = productWithImage.ProductImage;
 
 
                 // do other validations on your model as needed
@@ -67,6 +67,11 @@ namespace NbgMvc.Controllers
                     img.CopyTo(new FileStream(filePath, FileMode.Create));
 
                     //to do : Save uniqueFileName  to your db table   
+                    product.ImageFilename = uniqueFileName;
+
+                   productRepository.CreateEntity(product);
+
+
                 }
 
 

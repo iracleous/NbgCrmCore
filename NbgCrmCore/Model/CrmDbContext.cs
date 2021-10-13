@@ -27,6 +27,7 @@ namespace NbgCrmCore.Model
         {
 
         }
+       
           protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
           {
 
@@ -46,6 +47,6 @@ namespace NbgCrmCore.Model
 
 
         }
-
+        /* */
     }
 }
