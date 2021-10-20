@@ -58,18 +58,32 @@ function buy(productId) {
     $.ajax({
         url: UrlToCreateBasket,
         method: Method
-    }).done(basketId => localStorage.setItem("basketId", basketId))
+    }).done(basketId => {
+        doBuy(basketId, productId)
+    })
         .fail(failMessage => console.log("fail in basket creation"));
+    
+}
+
+
+function doBuy(basketId, productId) {
+
+    localStorage.setItem("basketId", basketId);
+    console.log(basketId);
+   
+
 
     let UrlAddToBasket = 'https://localhost:44369/api/basket/' + basketId + '/product/' + productId;
- 
+    console.log(UrlAddToBasket);
+    let Method = "Post";
     $.ajax({
         url: UrlAddToBasket,
         method: Method
-    }).done(result => $('#resultArea').html('The product has been added to basket'));
- 
-    console.log("userId"+userId)
-     
+    }).done(result => {
+        $('#resultArea').html('The product has been added to basket bid=' + basketId + ' pid= ' + productId);
+    });
+
+
 }
 
 
@@ -84,9 +98,21 @@ function showBasket() {
 
     let UrlGetBasketWithProduct = 'https://localhost:44369/api/basket/' + basketId;
     let Method = "GET";
-
+    console.log(UrlGetBasketWithProduct)
     $.ajax({
         url: UrlGetBasketWithProduct,
         method: Method
-    }).done(result => $('#resultArea').html(JSON.stringify(result)))     ;
+    }).done(basketItems => showBasketDetails(basketItems) );
+}
+
+function showBasketDetails(basketItems) {
+
+    $('#resultArea').html('<h1>Basket Items </h1>');
+   let basketItemsList = basketItems['basketItems']['$values']
+
+    basketItemsList.forEach(basketItem => $('#resultArea').append(basketItem.product.name));
+}
+
+function createBasket() {
+
 }

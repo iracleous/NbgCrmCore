@@ -38,10 +38,12 @@ namespace NbgCrmCore.Service
                 logger.LogInformation("AddProductToBasket Product not found");
                 return false;
             }
-            var basketItem = new BasketItem { Basket=basket, Product=product, Discount=0, Quantity=1 };
+            var basketItem = new BasketItem { Discount=0, Quantity=1 };
 
+           db.BasketItems.Add(basketItem);
+            basketItem.Basket = basket;
+            basketItem.Product = product;
 
-            db.BasketItems.Add(basketItem);
             db.SaveChanges();
             logger.LogInformation("AddProductToBasket basketItem added");
             return true;
