@@ -33,8 +33,8 @@ namespace NbgApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-     //     services.AddControllers().AddJsonOptions(x =>
-        //           x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+          services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 
             services.AddCors(options =>
