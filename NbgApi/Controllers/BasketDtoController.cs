@@ -49,7 +49,7 @@ namespace NbgApi.Controllers
 
         // POST api/<BasketController>{userId}
         [HttpPost("user/{userId}")]
-        public bool CreateBasket([FromRoute] int userId)
+        public int CreateBasket([FromRoute] int userId)
         {
             logger.LogInformation("CreateBasket");
             return basketService.CreateBasket(userId);

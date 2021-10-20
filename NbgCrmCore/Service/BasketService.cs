@@ -47,23 +47,27 @@ namespace NbgCrmCore.Service
             return true;
         }
 
-        public bool CreateBasket(int userId)
+        public int CreateBasket(int userId)
         {
             logger.LogInformation("CreateBasket");
             User user = db.Users.Find(userId);
             if (user == null)
             {
                 logger.LogInformation("CreateBasket user not found");
-                return false;
+                return -1;
             }
 
-            var basket = new Basket { DateTime=DateTime.Now,  Status= Status.OPEN, User= user};
+            var basket = new Basket { DateTime=DateTime.Now,  Status= Status.OPEN};
 
             db.Baskets.Add(basket);
             db.SaveChanges();
+            basket.User = user;
+            db.SaveChanges();
+
+
 
             logger.LogInformation("CreateBasket basket created");
-            return true;
+            return basket.BasketId;
         }
 
         public List<Basket> GetBasketByUserId(int userId)

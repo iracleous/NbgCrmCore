@@ -10,7 +10,7 @@ namespace NbgCrmCore.Service
     public interface IBasketService
     {
 
-        public bool CreateBasket(int userId);
+        public int CreateBasket(int userId);
         public List<Basket> GetBasketByUserId(int userId);
 
         public bool AddProductToBasket(int basketId, int productId);

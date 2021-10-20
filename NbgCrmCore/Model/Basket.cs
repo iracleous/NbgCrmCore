@@ -15,7 +15,7 @@ namespace NbgCrmCore.Model
         public   Status Status { get; set; }
         public    DateTime DateTime  { get; set; }
 
-        public    User User { get; set; }
+        public virtual User User { get; set; }
        
          public virtual List<BasketItem> BasketItems{ get; set; }
     }

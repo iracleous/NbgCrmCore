@@ -29,7 +29,7 @@ namespace NbgCrmCore.Service
             return basketService.AddProductToBasket(basketId, productId);
         }
 
-        public bool CreateBasket(int userId)
+        public int CreateBasket(int userId)
         {
             return basketService.CreateBasket(userId);
         }

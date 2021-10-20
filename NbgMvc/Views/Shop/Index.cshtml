@@ -8,59 +8,10 @@
 <div id="resultArea"></div>
 
 
-<button value="Show products" onclick="javascript:showProducts()">Show products</button>
+<button   onclick="javascript:showProducts()">Show products</button>
+
+<button   onclick="javascript:showBasket()">Show basket</button>
 
 <script>
-
-    function showProducts() {
-
-        let EndPoint = 'https://localhost:44369/api/product';
-        let Method = 'GET';
-
-        $.ajax({
-            url: EndPoint,
-            method: Method
-        }).done(response => parse(response))
-          .fail(failure => manageFailure())
-           ;
-    }
-
-    function parse(response) {
-        $('#resultArea').html('<h1> List of products </h1><br />')
-
-        products = response['$values']
-        $('#resultArea').append("<table  >");
-        products.forEach(product =>
-            $('#resultArea').append(
-                "<tr><td><a href='#' onclick='showProduct(" + product['productId']+ ")'>" + product['name'] + '<a></td><td>' + product['price'] + '</td></tr>')
-        );
-        $('#resultArea').append('</table>')
-    }
-
-    function failure() {
-        $('#resultArea').html('Failure in communication')
-    }
-
-    function showProduct(productId) {
-        let EndPoint = 'https://localhost:44369/api/product/' + productId;
-        let Method = 'GET';
-
-        $.ajax({
-            url: EndPoint,
-            method: Method
-        }).done(product => {
-
-            $('#resultArea').html(product['productId'] + '<br />')
-            $('#resultArea').append(product['name'] + '<br />')
-            $('#resultArea').append(product['price'] + '<br />')
-            $('#resultArea').append(
-                "<img src='product['imageFilename']'/><br />"  )
-
-        })
-            .fail(failure => manageFailure())
-            ;
-    }
-
-
 
 </script>

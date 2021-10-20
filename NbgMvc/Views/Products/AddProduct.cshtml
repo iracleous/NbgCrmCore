@@ -1,0 +1,61 @@
+﻿@using NbgCrmCore.Model
+@model ProductWithImage
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddProduct" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Product.Name" class="control-label"></label>
+                <input asp-for="Product.Name" class="form-control" />
+                <span asp-validation-for="Product.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Price" class="control-label"></label>
+                <input asp-for="Product.Price" class="form-control" />
+                <span asp-validation-for="Product.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.InventoryQuantity" class="control-label"></label>
+                <input asp-for="Product.InventoryQuantity" class="form-control" />
+                <span asp-validation-for="Product.InventoryQuantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.Color" class="control-label"></label>
+                <select asp-for="Product.Color" class="form-control" asp-items="@Html.GetEnumSelectList<Color>()"></select>
+                <span asp-validation-for="Product.Color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Product.BuyDate" class="control-label"></label>
+                <input asp-for="Product.BuyDate" class="form-control" />
+                <span asp-validation-for="Product.BuyDate" class="text-danger"></span>
+            </div>
+           
+
+            <dl>
+                <dt>
+                    <label asp-for="ProductImage"></label>
+                </dt>
+                <dd>
+                    <input asp-for="ProductImage" type="file">
+                    <span asp-validation-for="ProductImage"></span>
+                </dd>
+            </dl>
+
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

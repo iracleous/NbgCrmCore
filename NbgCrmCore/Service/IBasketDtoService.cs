@@ -9,7 +9,7 @@ namespace NbgCrmCore.Service
 {
     public interface IBasketDtoService
     {
-        public bool CreateBasket(int userId);
+        public int CreateBasket(int userId);
         public bool AddProductToBasket(int basketId, int productId);
         public BasketDto GetBasketDtoWithProducts(int basketId);
         public List<BasketDto> GetBasketDtoByUserId(int userId);
