@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using NbgCrmCore.Model;
 using System;
 using System.Collections.Generic;
@@ -16,30 +17,53 @@ namespace NbgApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly CrmDbContext db;
+        private readonly IMemoryCache memoryCache;
 
-        public ProductController(CrmDbContext db)
+
+
+        public ProductController(CrmDbContext db, IMemoryCache memoryCache)
         {
             this.db = db;
+            this.memoryCache = memoryCache;
         }
+
+
+
         // GET: api/<ProductController>?productName=chips&maxPrice=2
         [HttpGet]
         public async Task< IEnumerable<Product>> Get(
             [FromQuery] string productName, [FromQuery] decimal? maxPrice)
         {
-        /*    var result = db.Products.Select(p => p); 
-            if (productName != null)
-                result = result.Where(product => product.Name.Contains(productName));
+            /*    var result = db.Products.Select(p => p); 
+                if (productName != null)
+                    result = result.Where(product => product.Name.Contains(productName));
 
-            if (maxPrice != null)
-                result = result.Where(product => product.Price <= maxPrice);
+                if (maxPrice != null)
+                    result = result.Where(product => product.Price <= maxPrice);
 
-            return await result.ToListAsync();
-        */
+                return await result.ToListAsync();
+            */
 
-            return await db.Products.AsQueryable()
-                .WhereIf  (productName!=null, product => product.Name.Contains(productName))
-                .WhereIf  (maxPrice != null, product => product.Price <= maxPrice)
+            //use cache if available
+            string cacheKey = "productList";
+
+            if (!memoryCache.TryGetValue(cacheKey, out List<Product> productList))
+            {
+                productList = await db.Products.AsQueryable()
+                .WhereIf(productName != null, product => product.Name.Contains(productName))
+                .WhereIf(maxPrice != null, product => product.Price <= maxPrice)
                 .ToListAsync();
+
+                var cacheExpiryOptions = new MemoryCacheEntryOptions
+                {
+                    AbsoluteExpiration = DateTime.Now.AddSeconds(60),
+                    Priority = CacheItemPriority.High,
+                    SlidingExpiration = TimeSpan.FromSeconds(20)
+                };
+                memoryCache.Set(cacheKey, productList, cacheExpiryOptions);
+            }
+
+           return  productList;
            }
 
 

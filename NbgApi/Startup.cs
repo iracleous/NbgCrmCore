@@ -61,6 +61,19 @@ namespace NbgApi
                     options.UseSqlServer(Configuration.GetConnectionString("NbgSqlConnection")));
 
 
+            services.AddMemoryCache();
+
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromSeconds(30);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+
+
             services.AddControllers();
         }
 
@@ -81,6 +94,9 @@ namespace NbgApi
             app.UseRouting();
 
             app.UseAuthorization();
+
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

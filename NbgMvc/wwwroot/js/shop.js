@@ -62,7 +62,10 @@ function buy(productId) {
         doBuy(basketId, productId)
     })
         .fail(failMessage => console.log("fail in basket creation"));
-    
+
+
+
+
 }
 
 
